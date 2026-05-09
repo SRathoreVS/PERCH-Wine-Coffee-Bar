@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Environment, Float, Stars } from '@react-three/drei'
 import FloatingObjects from './FloatingObjects'
-import ParticleField from './ParticleField'
+import ParticleField from './ParticleFeild'
 
 export default function Scene({ className = '' }) {
     return (

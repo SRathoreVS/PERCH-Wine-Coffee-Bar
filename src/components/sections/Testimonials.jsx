@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react'
-import businessData from '../../data/businessData.json'
+import businessData from '../../data/buisnessData.json'
 
 const { testimonials, ratings } = businessData
 

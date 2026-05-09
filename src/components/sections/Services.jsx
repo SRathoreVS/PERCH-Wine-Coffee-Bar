@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Coffee, Wine, UtensilsCrossed, Calendar, GraduationCap, Sparkles, ArrowRight } from 'lucide-react'
 import Button from '../common/Button'
-import businessData from '../../data/businessData.json'
+import businessData from '../../data/buisnessData.json'
 
 const { services } = businessData
 

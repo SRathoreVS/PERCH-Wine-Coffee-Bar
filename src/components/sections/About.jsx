@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Wine, Coffee, Users, Award } from 'lucide-react'
-import businessData from '../../data/businessData.json'
+import businessData from '../../data/buisnessData.json'
 
 const { business } = businessData
 

@@ -4,7 +4,7 @@ import {
     Wine, Coffee, MapPin, Phone, Mail, Clock,
     Instagram, Facebook, Twitter
 } from 'lucide-react'
-import businessData from '../../data/businessData.json'
+import businessData from '../../data/buisnessData.json'
 
 const { business, contact, hours, social } = businessData
 

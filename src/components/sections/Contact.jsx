@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from 'lucide-react'
 import Button from '../common/Button'
-import businessData from '../../data/businessData.json'
+import businessData from '../../data/buisnessData.json'
 
 const { contact, hours } = businessData
 
@@ -248,7 +248,7 @@ export default function Contact() {
 
                         {/* WhatsApp CTA */}
                         <a
-                            href={`[wa.me](https://wa.me/${contact.phone.replace(/)[^0-9]/g, '')}?text=Hi, I'd like to make a reservation at PERCH.`}
+                            href={`[wa.me](https://wa.me/${contact.phone.replace(/[^0-9]/g, '')}?text=Hi, I'd like to make a reservation at PERCH.`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center gap-3 p-4 rounded-2xl 

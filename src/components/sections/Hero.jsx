@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDown, Star, MapPin } from 'lucide-react'
 import Scene from '../three/Scene'
 import Button from '../common/Button'
-import businessData from '../../data/businessData.json'
+import businessData from '../../data/buisnessData.json'
 
 const { business, ratings, contact } = businessData
 
