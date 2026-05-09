@@ -1,0 +1,258 @@
+{
+  "business": {
+    "name": "PERCH Wine & Coffee Bar",
+    "tagline": "Where Wine Meets Coffee Culture",
+    "description": "An elevated sanctuary where the art of wine and the craft of coffee converge. Experience Mumbai's most sophisticated café culture.",
+    "shortDescription": "Premium wine and artisan coffee in the heart of Mumbai",
+    "category": "Wine Bar & Coffee House",
+    "established": "2018",
+    "philosophy": "We believe in creating moments of pure indulgence—where every sip tells a story, every visit becomes a memory, and every guest feels like family."
+  },
+  "contact": {
+    "address": {
+      "full": "Mumbai, Maharashtra, India",
+      "street": "Premium Location",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "country": "India",
+      "pincode": "400001"
+    },
+    "coordinates": {
+      "lat": 19.071628,
+      "lng": 72.8248366
+    },
+    "phone": "+91 98765 43210",
+    "email": "hello@perchbar.com",
+    "website": "[perchbar.com](https://perchbar.com)"
+  },
+  "hours": {
+    "monday": "8:00 AM - 11:00 PM",
+    "tuesday": "8:00 AM - 11:00 PM",
+    "wednesday": "8:00 AM - 11:00 PM",
+    "thursday": "8:00 AM - 11:00 PM",
+    "friday": "8:00 AM - 12:00 AM",
+    "saturday": "9:00 AM - 12:00 AM",
+    "sunday": "9:00 AM - 11:00 PM"
+  },
+  "social": {
+    "instagram": "[instagram.com](https://instagram.com/perchwinecoffee)",
+    "facebook": "[facebook.com](https://facebook.com/perchwinecoffee)",
+    "twitter": "[twitter.com](https://twitter.com/perchbar)"
+  },
+  "ratings": {
+    "overall": 4.6,
+    "totalReviews": 1250,
+    "breakdown": {
+      "ambiance": 4.8,
+      "service": 4.5,
+      "quality": 4.7,
+      "value": 4.4
+    }
+  },
+  "services": [
+    {
+      "id": 1,
+      "title": "Artisan Coffee",
+      "description": "Single-origin beans sourced from the world's finest estates, expertly roasted and brewed to perfection by our certified baristas.",
+      "icon": "Coffee",
+      "features": ["Single Origin", "Pour Over", "Cold Brew", "Espresso Crafts"]
+    },
+    {
+      "id": 2,
+      "title": "Curated Wine Selection",
+      "description": "An extensive collection of old and new world wines, carefully curated to complement every palate and occasion.",
+      "icon": "Wine",
+      "features": ["Red Wines", "White Wines", "Rosé", "Champagne & Sparkling"]
+    },
+    {
+      "id": 3,
+      "title": "Gourmet Kitchen",
+      "description": "European-inspired small plates and comfort food designed to pair perfectly with our beverages.",
+      "icon": "UtensilsCrossed",
+      "features": ["Brunch Menu", "Tapas", "Cheese Boards", "Desserts"]
+    },
+    {
+      "id": 4,
+      "title": "Private Events",
+      "description": "Host your intimate gatherings, wine tastings, and corporate events in our elegant private spaces.",
+      "icon": "Calendar",
+      "features": [
+        "Wine Tastings",
+        "Corporate Events",
+        "Private Dining",
+        "Celebrations"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Wine Education",
+      "description": "Expand your knowledge with our sommelier-led wine appreciation courses and tasting sessions.",
+      "icon": "GraduationCap",
+      "features": [
+        "Wine Courses",
+        "Tasting Sessions",
+        "Food Pairing",
+        "Certification"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Coffee Workshops",
+      "description": "Learn the art of coffee making from bean to cup with our interactive barista workshops.",
+      "icon": "Sparkles",
+      "features": [
+        "Latte Art",
+        "Brewing Methods",
+        "Bean Selection",
+        "Home Brewing"
+      ]
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "name": "Priya Sharma",
+      "role": "Wine Enthusiast",
+      "content": "PERCH has redefined my understanding of wine culture in Mumbai. The sommelier's recommendations are always spot-on, and the ambiance is unmatched.",
+      "rating": 5,
+      "image": "/images/testimonials/person1.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Rahul Mehta",
+      "role": "Coffee Connoisseur",
+      "content": "The attention to detail in every cup is remarkable. From the bean selection to the pour-over technique, everything is executed with precision and passion.",
+      "rating": 5,
+      "image": "/images/testimonials/person2.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Ananya Desai",
+      "role": "Regular Guest",
+      "content": "My weekend happy place. The European vibe, excellent wine list, and friendly staff make every visit memorable. It's become my go-to for client meetings.",
+      "rating": 5,
+      "image": "/images/testimonials/person3.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Vikram Singh",
+      "role": "Food Blogger",
+      "content": "PERCH strikes the perfect balance between sophistication and warmth. The cheese boards are divine, and the wine selection rivals the best bars in Europe.",
+      "rating": 5,
+      "image": "/images/testimonials/person4.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Meera Kapoor",
+      "role": "Event Planner",
+      "content": "Hosted my brand launch here and it was impeccable. The team went above and beyond, and the private space was perfect for our intimate gathering.",
+      "rating": 5,
+      "image": "/images/testimonials/person5.jpg"
+    }
+  ],
+  "gallery": [
+    {
+      "id": 1,
+      "src": "/images/gallery/interior-1.jpg",
+      "alt": "Elegant bar interior with ambient lighting",
+      "category": "Interior"
+    },
+    {
+      "id": 2,
+      "src": "/images/gallery/wine-1.jpg",
+      "alt": "Curated wine selection",
+      "category": "Wine"
+    },
+    {
+      "id": 3,
+      "src": "/images/gallery/coffee-1.jpg",
+      "alt": "Artisan latte art",
+      "category": "Coffee"
+    },
+    {
+      "id": 4,
+      "src": "/images/gallery/food-1.jpg",
+      "alt": "Gourmet cheese board",
+      "category": "Food"
+    },
+    {
+      "id": 5,
+      "src": "/images/gallery/ambiance-1.jpg",
+      "alt": "Outdoor seating area",
+      "category": "Ambiance"
+    },
+    {
+      "id": 6,
+      "src": "/images/gallery/events-1.jpg",
+      "alt": "Private event space",
+      "category": "Events"
+    }
+  ],
+  "faq": [
+    {
+      "id": 1,
+      "question": "Do I need a reservation?",
+      "answer": "While walk-ins are welcome, we recommend reservations for dinner service and weekends to ensure availability. You can book through our website or call us directly."
+    },
+    {
+      "id": 2,
+      "question": "What is the dress code?",
+      "answer": "We maintain a smart casual dress code. While we want you to feel comfortable, we ask guests to avoid sportswear, beachwear, and flip-flops."
+    },
+    {
+      "id": 3,
+      "question": "Do you offer vegetarian and vegan options?",
+      "answer": "Absolutely! Our menu features a wide variety of vegetarian options, and our chefs can accommodate vegan preferences. Please inform your server of any dietary requirements."
+    },
+    {
+      "id": 4,
+      "question": "Can I host a private event at PERCH?",
+      "answer": "Yes! We have dedicated private spaces perfect for wine tastings, corporate events, birthday celebrations, and intimate gatherings. Contact our events team for packages and availability."
+    },
+    {
+      "id": 5,
+      "question": "Do you offer wine by the glass?",
+      "answer": "Yes, we have an extensive by-the-glass program featuring rotating selections. Our sommeliers are happy to recommend wines based on your preferences."
+    },
+    {
+      "id": 6,
+      "question": "Is parking available?",
+      "answer": "Yes, we have valet parking available during all operating hours. Complimentary for guests dining with us."
+    }
+  ],
+  "stats": [
+    {
+      "value": "150+",
+      "label": "Wine Labels"
+    },
+    {
+      "value": "6",
+      "label": "Years of Excellence"
+    },
+    {
+      "value": "12",
+      "label": "Coffee Origins"
+    },
+    {
+      "value": "50K+",
+      "label": "Happy Guests"
+    }
+  ],
+  "seo": {
+    "title": "PERCH Wine & Coffee Bar | Premium Wine Bar in Mumbai",
+    "description": "Experience Mumbai's finest wine and coffee culture at PERCH. Curated wines, artisan coffee, gourmet food, and an elegant ambiance await you.",
+    "keywords": [
+      "wine bar mumbai",
+      "coffee bar mumbai",
+      "premium cafe mumbai",
+      "wine tasting mumbai",
+      "artisan coffee",
+      "fine dining mumbai",
+      "date night mumbai",
+      "corporate events mumbai",
+      "wine and dine",
+      "european cafe mumbai"
+    ],
+    "ogImage": "/images/og-image.jpg"
+  }
+}
