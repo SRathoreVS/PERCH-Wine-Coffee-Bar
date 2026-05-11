@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import businessData from '../data/businessData.json'
+import businessData from '../data/buisnessData.json'
 
 const { business } = businessData
 
