@@ -1,0 +1,69 @@
+version: '3.9'
+
+services:
+  # ── MongoDB ─────────────────────────────────
+  mongo:
+    image: mongo:7.0
+    container_name: perch-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: perch
+      MONGO_INITDB_ROOT_PASSWORD: perchsecret
+      MONGO_INITDB_DATABASE: perch_bar
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - perch-net
+
+  # ── Redis (optional caching) ─────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: perch-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    command: redis-server --requirepass redissecret
+    volumes:
+      - redis_data:/data
+    networks:
+      - perch-net
+
+  # ── Backend API ──────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: perch-api
+    restart: unless-stopped
+    ports:
+      - '5000:5000'
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      MONGO_URI: mongodb://perch:perchsecret@mongo:27017/perch_bar?authSource=admin
+      REDIS_URL: redis://:redissecret@redis:6379
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+      - redis
+    volumes:
+      - ./src/logs:/app/src/logs
+      - ./src/uploads:/app/src/uploads
+    networks:
+      - perch-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  mongo_data:
+  redis_data:
+
+networks:
+  perch-net:
+    driver: bridge

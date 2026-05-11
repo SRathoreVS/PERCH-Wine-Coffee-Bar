@@ -1,0 +1,142 @@
+{
+  "info": {
+    "name": "PERCH Wine & Coffee Bar API",
+    "description": "Complete API collection for PERCH backend",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "accessToken", "value": "" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [{ "listen": "test", "script": { "exec": ["const res = pm.response.json();", "if (res.success && res.data.accessToken) {", "  pm.collectionVariables.set('accessToken', res.data.accessToken);", "  pm.test('Login successful', () => pm.response.to.have.status(200));", "}"] } }],
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"email\":\"admin@perchbar.com\",\"password\":\"Admin@1234\"}" }
+          }
+        },
+        {
+          "name": "Get Me",
+          "request": { "method": "GET", "url": "{{baseUrl}}/auth/me", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] } }
+        },
+        {
+          "name": "Logout",
+          "request": { "method": "POST", "url": "{{baseUrl}}/auth/logout", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] } }
+        }
+      ]
+    },
+    {
+      "name": "Business",
+      "item": [
+        { "name": "Get Business", "request": { "method": "GET", "url": "{{baseUrl}}/business" } },
+        {
+          "name": "Update Business",
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/business",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"name\":\"PERCH Wine & Coffee Bar\",\"tagline\":\"Elevated Sips, Intimate Moments\"}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "item": [
+        { "name": "Get All Services", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/services?page=1&limit=10", "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "10" }, { "key": "category", "value": "", "disabled": true }, { "key": "featured", "value": "true", "disabled": true }, { "key": "search", "value": "", "disabled": true }] } } },
+        { "name": "Get Service by Slug", "request": { "method": "GET", "url": "{{baseUrl}}/services/wine-tastings" } },
+        { "name": "Create Service", "request": { "method": "POST", "url": "{{baseUrl}}/services", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"title\":\"New Service\",\"description\":\"Service description here.\",\"category\":\"wine\",\"isFeatured\":false}" } } },
+        { "name": "Update Service", "request": { "method": "PUT", "url": "{{baseUrl}}/services/:id", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"title\":\"Updated Service\"}" } } },
+        { "name": "Delete Service", "request": { "method": "DELETE", "url": "{{baseUrl}}/services/:id" } }
+      ]
+    },
+    {
+      "name": "Gallery",
+      "item": [
+        { "name": "Get Gallery", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/gallery?page=1&limit=12", "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "12" }, { "key": "category", "value": "ambiance", "disabled": true }] } } },
+        { "name": "Get Categories", "request": { "method": "GET", "url": "{{baseUrl}}/gallery/categories" } },
+        { "name": "Upload Image", "request": { "method": "POST", "url": "{{baseUrl}}/gallery", "body": { "mode": "formdata", "formdata": [{ "key": "image", "type": "file" }, { "key": "category", "value": "ambiance", "type": "text" }, { "key": "title", "value": "Interior shot", "type": "text" }] } } },
+        { "name": "Delete Image", "request": { "method": "DELETE", "url": "{{baseUrl}}/gallery/:id" } }
+      ]
+    },
+    {
+      "name": "Testimonials",
+      "item": [
+        { "name": "Get Testimonials", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/testimonials?featured=true", "query": [{ "key": "featured", "value": "true" }] } } },
+        { "name": "Create Testimonial", "request": { "method": "POST", "url": "{{baseUrl}}/testimonials", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"author\":\"Jane Doe\",\"role\":\"Regular Customer\",\"content\":\"Absolutely love this place!\",\"rating\":5,\"source\":\"google\",\"isFeatured\":true}" } } }
+      ]
+    },
+    {
+      "name": "Contact",
+      "item": [
+        { "name": "Submit Contact Form", "request": { "method": "POST", "url": "{{baseUrl}}/contact", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"name\":\"Test User\",\"email\":\"test@example.com\",\"subject\":\"Table for 4\",\"message\":\"I would like to book a table for 4 people on Saturday evening.\",\"type\":\"reservation\"}" } } },
+        { "name": "Get All Messages (Admin)", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/contact?status=unread&page=1", "query": [{ "key": "status", "value": "unread" }, { "key": "page", "value": "1" }] } } },
+        { "name": "Update Message Status", "request": { "method": "PATCH", "url": "{{baseUrl}}/contact/:id/status", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"status\":\"replied\"}" } } }
+      ]
+    },
+    {
+      "name": "Newsletter",
+      "item": [
+        { "name": "Subscribe", "request": { "method": "POST", "url": "{{baseUrl}}/newsletter/subscribe", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"email\":\"subscriber@example.com\",\"name\":\"Wine Lover\"}" } } },
+        { "name": "Get Subscribers (Admin)", "request": { "method": "GET", "url": "{{baseUrl}}/newsletter?status=active" } }
+      ]
+    },
+    {
+      "name": "FAQs",
+      "item": [
+        { "name": "Get FAQs", "request": { "method": "GET", "url": "{{baseUrl}}/faqs" } },
+        { "name": "Get FAQs by Category", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/faqs?category=reservations", "query": [{ "key": "category", "value": "reservations" }] } } }
+      ]
+    },
+    {
+      "name": "SEO",
+      "item": [
+        { "name": "Get SEO - Home", "request": { "method": "GET", "url": "{{baseUrl}}/seo/home" } },
+        { "name": "Get SEO - Gallery", "request": { "method": "GET", "url": "{{baseUrl}}/seo/gallery" } },
+        { "name": "Upsert SEO", "request": { "method": "POST", "url": "{{baseUrl}}/seo", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"page\":\"home\",\"metaTitle\":\"PERCH Wine & Coffee Bar\",\"metaDescription\":\"Premium wine and coffee bar in San Francisco.\"}" } } }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        { "name": "Create Booking", "request": { "method": "POST", "url": "{{baseUrl}}/bookings", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"name\":\"John Smith\",\"email\":\"john@example.com\",\"phone\":\"+1 555-0100\",\"date\":\"2025-12-25\",\"time\":\"7:00 PM\",\"partySize\":4,\"type\":\"table\",\"specialRequests\":\"Window seat preferred\"}" } } },
+        { "name": "Get Booking by Code", "request": { "method": "GET", "url": "{{baseUrl}}/bookings/confirm/PERCH-ABC123" } },
+        { "name": "Get All Bookings (Admin)", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/bookings?status=pending&page=1", "query": [{ "key": "status", "value": "pending" }] } } },
+        { "name": "Update Booking Status", "request": { "method": "PATCH", "url": "{{baseUrl}}/bookings/:id/status", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"status\":\"confirmed\"}" } } }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        { "name": "Track Page View", "request": { "method": "POST", "url": "{{baseUrl}}/analytics/track", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"event\":\"page_view\",\"page\":\"/gallery\",\"sessionId\":\"sess_test_123\"}" } } },
+        { "name": "Dashboard Stats (Admin)", "request": { "method": "GET", "url": "{{baseUrl}}/analytics/dashboard" } },
+        { "name": "Page Views Chart (Admin)", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/analytics/pageviews?days=30", "query": [{ "key": "days", "value": "30" }] } } }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        { "name": "Get Public Settings", "request": { "method": "GET", "url": "{{baseUrl}}/settings/public" } },
+        { "name": "Get All Settings (Admin)", "request": { "method": "GET", "url": "{{baseUrl}}/settings" } },
+        { "name": "Update Settings", "request": { "method": "POST", "url": "{{baseUrl}}/settings", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"settings\":[{\"key\":\"booking_enabled\",\"value\":true,\"group\":\"features\",\"isPublic\":true}]}" } } }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        { "name": "Health Check", "request": { "method": "GET", "url": "{{baseUrl}}/health" } }
+      ]
+    }
+  ]
+}
