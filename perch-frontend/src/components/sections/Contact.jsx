@@ -2,9 +2,8 @@ import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from 'lucide-react'
 import Button from '../common/Button'
-import businessData from '../../data/buisnessData.json'
-
-const { contact, hours } = businessData
+import { useQuery, useMutation } from '@tanstack/react-query'
+import { businessAPI, contactAPI } from '../../api/index'
 
 export default function Contact() {
     const ref = useRef(null)
@@ -15,6 +14,7 @@ export default function Contact() {
         phone: '',
         message: '',
     })
+    const [submitStatus, setSubmitStatus] = useState(null) 
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -28,15 +28,21 @@ export default function Contact() {
             [e.target.name]: e.target.value,
         }))
     }
+    const { data: bizData } = useQuery({
+        queryKey: ['business'],
+        queryFn: () => businessAPI.get().then(r => r.data.data),
+    })
+    const contact = bizData?.contact ?? {}
+    const hours = bizData?.businessHours ?? []
 
     const contactInfo = [
         {
             icon: MapPin,
             title: 'Visit Us',
-            content: contact.address.full,
+            content: `${bizData?.address?.street}, ${bizData?.address?.city}`,
             action: {
                 label: 'Get Directions',
-                href: `[google.com](https://www.google.com/maps?q=${contact.coordinates.lat},${contact.coordinates.lng})`,
+                href: `https://www.google.com/maps?q=${bizData?.address?.coordinates?.lat},${bizData?.address?.coordinates?.lng}`,
             },
         },
         {
@@ -60,10 +66,23 @@ export default function Contact() {
         {
             icon: Clock,
             title: 'Opening Hours',
-            content: `Mon-Thu: ${hours.monday}`,
-            subContent: `Fri-Sat: ${hours.friday}`,
+            content: `Mon-Thu: ${hours.find(h => h.day === 'Monday')?.open ?? 'Closed'}`,
+            subContent: `Fri-Sat: ${hours.find(h => h.day === 'Friday')?.open ?? 'Closed'}`,
         },
     ]
+
+
+    const submitMutation = useMutation({
+
+        mutationFn: (data) => contactAPI.submit(data),
+
+        onSuccess: () => {
+            setSubmitStatus('success')
+            setFormData({ name: '', email: '', phone: '', message: '' })
+        },
+        onError: () => setSubmitStatus('error'),
+
+    })
 
     return (
         <section ref={ref} className="section-padding bg-cream-100/50 dark:bg-coffee-900/30">
@@ -176,9 +195,35 @@ export default function Contact() {
                                     />
                                 </div>
 
-                                <Button type="submit" variant="primary" size="lg" className="w-full" icon={<Send className="w-5 h-5" />}>
-                                    Send Message
+                                <Button type="submit" variant="primary" size="lg" className="w-full"
+
+                                    icon={<Send className="w-5 h-5" />}
+
+                                    disabled={submitMutation.isPending}>
+
+                                    {submitMutation.isPending ? 'Sending...' : 'Send Message'}
+
                                 </Button>
+
+                                {submitStatus === 'success' && (
+
+                                    <p className="text-green-600 text-sm text-center mt-2">
+
+                                        Message sent! We'll reply within 24 hours.
+
+                                    </p>
+
+                                )}
+
+                                {submitStatus === 'error' && (
+
+                                    <p className="text-red-500 text-sm text-center mt-2">
+
+                                        Something went wrong. Please try again.
+
+                                    </p>
+
+                                )}
                             </form>
                         </div>
                     </motion.div>
@@ -235,7 +280,7 @@ export default function Contact() {
                         {/* Map */}
                         <div className="h-64 md:h-80 rounded-2xl overflow-hidden glass">
                             <iframe
-                                src={`[google.com](https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771!2d${contact.coordinates.lng}!3d${contact.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDA0JzE3LjkiTiA3MsKwNDknMjkuNCJF!5e0!3m2!1sen!2sin!4v1234567890)`}
+                                src={`[google.com](https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771!2d${bizData?.address?.coordinates?.lng}!3d${bizData?.address?.coordinates?.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDA0JzE3LjkiTiA3MsKwNDknMjkuNCJF!5e0!3m2!1sen!2sin!4v1234567890)`}
                                 width="100%"
                                 height="100%"
                                 style={{ border: 0 }}
@@ -248,7 +293,7 @@ export default function Contact() {
 
                         {/* WhatsApp CTA */}
                         <a
-                            href={`[wa.me](https://wa.me/${contact.phone.replace(/[^0-9]/g, '')}?text=Hi, I'd like to make a reservation at PERCH.`}
+                            href={`https://wa.me/${contact.phone?.replace(/[^0-9]/g, '') || ''}?text=Hi, I'd like to make a reservation at PERCH.`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center gap-3 p-4 rounded-2xl 

@@ -1,9 +1,8 @@
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { ChevronDown, HelpCircle } from 'lucide-react'
-import businessData from '../../data/buisnessData.json'
-
-const { faq } = businessData
+import { useQuery } from '@tanstack/react-query'
+import { faqAPI } from '../../api/index'
 
 export default function FAQ() {
     const ref = useRef(null)
@@ -13,6 +12,13 @@ export default function FAQ() {
     const toggleFAQ = (index) => {
         setOpenIndex(openIndex === index ? null : index)
     }
+
+    const { data, isLoading } = useQuery({
+        queryKey: ['faqs'],
+        queryFn: () => faqAPI.getAll().then(r => r.data.data),
+    })
+    const faq = data || []
+    if (isLoading) return null
 
     return (
         <section ref={ref} className="section-padding">
@@ -40,7 +46,7 @@ export default function FAQ() {
                 <div className="space-y-4">
                     {faq.map((item, index) => (
                         <motion.div
-                            key={item.id}
+                            key={item._id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={isInView ? { opacity: 1, y: 0 } : {}}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -95,7 +101,7 @@ export default function FAQ() {
                         We're here to help. Reach out to us directly.
                     </p>
                     <a
-                        href={`mailto:${businessData.contact.email}`}
+                        href="mailto:hello@perchbar.com"  
                         className="btn-primary inline-flex"
                     >
                         Contact Us

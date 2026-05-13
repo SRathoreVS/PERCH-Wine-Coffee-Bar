@@ -2,9 +2,8 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Coffee, Wine, UtensilsCrossed, Calendar, GraduationCap, Sparkles, ArrowRight } from 'lucide-react'
 import Button from '../common/Button'
-import businessData from '../../data/buisnessData.json'
-
-const { services } = businessData
+import { useQuery } from '@tanstack/react-query'
+import { servicesAPI } from '../../api/index'
 
 const iconMap = {
     Coffee,
@@ -18,6 +17,18 @@ const iconMap = {
 export default function Services() {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, amount: 0.2 })
+
+    const { data, isLoading } = useQuery({
+
+        queryKey: ['services'],
+
+        queryFn: () => servicesAPI.getAll().then(r => r.data.data),
+
+    })
+
+    const services = data || []
+
+    if (isLoading) return null  
 
     return (
         <section ref={ref} className="section-padding bg-coffee-950 text-cream-50 relative overflow-hidden">
@@ -54,7 +65,7 @@ export default function Services() {
 
                         return (
                             <motion.div
-                                key={service.id}
+                                key={service._id}
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -81,7 +92,7 @@ export default function Services() {
 
                                     {/* Features */}
                                     <div className="flex flex-wrap gap-2 mb-6">
-                                        {service.features.slice(0, 3).map((feature, i) => (
+                                        {service.highlights.slice(0, 3).map((feature, i) => (
                                             <span
                                                 key={i}
                                                 className="text-xs px-3 py-1 rounded-full bg-coffee-800 text-cream-300"

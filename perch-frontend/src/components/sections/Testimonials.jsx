@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react'
-import businessData from '../../data/buisnessData.json'
+import { useQuery } from '@tanstack/react-query'
 
-const { testimonials, ratings } = businessData
+import { testimonialsAPI } from '../../api/index'
 
 export default function Testimonials() {
     const ref = useRef(null)
@@ -12,6 +12,19 @@ export default function Testimonials() {
 
     const next = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length)
     const prev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+
+    const { data, isLoading } = useQuery({
+
+        queryKey: ['testimonials'],
+
+        queryFn: () => testimonialsAPI.getAll({ featured: true }).then(r => r.data.data),
+
+    })
+
+    const testimonials = data || []
+
+    const ratings = { overall: 4.9, totalReviews: 500 }
+    if (isLoading || testimonials.length === 0) return null
 
     return (
         <section ref={ref} className="section-padding relative overflow-hidden">
@@ -87,11 +100,11 @@ export default function Testimonials() {
                                 <div className="flex items-center justify-center gap-4">
                                     <div className="w-14 h-14 rounded-full bg-gradient-to-br from-wine-500 to-primary-500 
                                 flex items-center justify-center text-white font-bold text-lg">
-                                        {testimonials[currentIndex].name.charAt(0)}
+                                        {testimonials[currentIndex].author.charAt(0)}
                                     </div>
                                     <div className="text-left">
                                         <p className="font-semibold text-coffee-900 dark:text-cream-50">
-                                            {testimonials[currentIndex].name}
+                                            {testimonials[currentIndex].author}
                                         </p>
                                         <p className="text-sm text-coffee-600 dark:text-cream-400">
                                             {testimonials[currentIndex].role}

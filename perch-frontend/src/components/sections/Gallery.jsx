@@ -1,11 +1,9 @@
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { X, ZoomIn } from 'lucide-react'
-import businessData from '../../data/buisnessData.json'
+import { useQuery } from '@tanstack/react-query'
 
-const { gallery } = businessData
-
-const categories = ['All', ...new Set(gallery.map((item) => item.category))]
+import { galleryAPI } from '../../api/index'
 
 export default function Gallery() {
     const ref = useRef(null)
@@ -13,10 +11,22 @@ export default function Gallery() {
     const [activeCategory, setActiveCategory] = useState('All')
     const [selectedImage, setSelectedImage] = useState(null)
 
+    const { data: galleryData, isLoading } = useQuery({
+        queryKey: ['gallery'],
+        queryFn: () => galleryAPI.getAll({ limit: 50 }).then(r => r.data.data),
+    })
+
+    const gallery = galleryData || []
+
     const filteredImages =
         activeCategory === 'All'
             ? gallery
             : gallery.filter((item) => item.category === activeCategory)
+
+
+    const categories = ['All', ...new Set(gallery.map(item => item.category))]
+
+    if (isLoading) return null
 
     return (
         <section ref={ref} className="section-padding">
@@ -68,7 +78,7 @@ export default function Gallery() {
                     <AnimatePresence mode="popLayout">
                         {filteredImages.map((image, index) => (
                             <motion.div
-                                key={image.id}
+                                key={image._id}
                                 layout
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -83,8 +93,8 @@ export default function Gallery() {
                               dark:from-wine-800 dark:to-primary-800"
                                     >
                                         <img
-                                            src={image.src}
-                                            alt={image.alt}
+                                            src={image.imageUrl}
+                                            alt={image.altText || image.title}
                                             className="w-full h-full object-cover transition-transform duration-700 
                                group-hover:scale-110"
                                             loading="lazy"
@@ -136,8 +146,8 @@ export default function Gallery() {
                             >
                                 <div className="rounded-2xl overflow-hidden">
                                     <img
-                                        src={selectedImage.src}
-                                        alt={selectedImage.alt}
+                                        src={selectedImage.imageUrl}
+                                        alt={selectedImage.altText || selectedImage.title}
                                         className="w-full h-auto"
                                     />
                                 </div>

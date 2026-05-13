@@ -1,9 +1,9 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Wine, Coffee, Users, Award } from 'lucide-react'
-import businessData from '../../data/buisnessData.json'
+import { useQuery } from '@tanstack/react-query'
 
-const { business } = businessData
+import { businessAPI } from '../../api/index'
 
 const features = [
     {
@@ -31,6 +31,16 @@ const features = [
 export default function About() {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, amount: 0.3 })
+
+    const { data: business, isLoading } = useQuery({
+
+        queryKey: ['business'],
+        // same key → uses cached data, no new request
+        queryFn: () => businessAPI.get().then(r => r.data.data),
+
+    })
+
+    if (isLoading) return null
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -87,14 +97,14 @@ export default function About() {
                             variants={itemVariants}
                             className="body-lg mb-6"
                         >
-                            {business.philosophy}
+                            {business?.description}
                         </motion.p>
 
                         <motion.p
                             variants={itemVariants}
                             className="text-coffee-600 dark:text-cream-400 mb-8"
                         >
-                            Established in {business.established}, PERCH has become Mumbai's sanctuary
+                            Established in {business?.established}, PERCH has become Mumbai's sanctuary
                             for wine enthusiasts and coffee aficionados alike. Our European-inspired
                             space offers a refined escape from the everyday, where quality meets comfort.
                         </motion.p>
@@ -187,7 +197,7 @@ export default function About() {
                         >
                             <div className="text-center">
                                 <span className="block text-3xl font-display font-bold text-gradient">
-                                    {business.established}
+                                    {business?.established}
                                 </span>
                                 <span className="text-sm text-coffee-600 dark:text-cream-400">
                                     Established
